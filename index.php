@@ -15,6 +15,7 @@ if(!isset($_SESSION['logedIn'])){
 if(!isset($_SESSION['userId'])){
 	$_SESSION['userId'] = -1;
 }
+
 if(!isset($_SESSION['privilege'])){
 	$_SESSION['privilege'] = 0;
 }
