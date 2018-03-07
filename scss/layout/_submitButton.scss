@@ -1,0 +1,10 @@
+.inputLogin{
+  width: 10vmin;
+  background: none;
+  border: none;
+  background: lightblue;
+  height: 100%;
+  &:hover{
+    background-color: steelBlue;
+  }
+}
