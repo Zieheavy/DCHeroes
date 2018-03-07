@@ -6,12 +6,15 @@ include 'include/defaults.php';
 if(!isset($_SESSION['user'])){
 	$_SESSION['user'] = '';
 }
+
 if(!isset($_SESSION['password'])){
 	$_SESSION['password'] = '';
 }
+
 if(!isset($_SESSION['logedIn'])){
 	$_SESSION['logedIn'] = 0;
 }
+
 if(!isset($_SESSION['userId'])){
 	$_SESSION['userId'] = -1;
 }
