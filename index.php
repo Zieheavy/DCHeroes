@@ -76,16 +76,7 @@ while($row = mysqli_fetch_assoc($reviewQuery)){
 	$reviewTable[] = $row;
 }
 
-//when you switch to another team selects the first person of that team
-$a_tempIdArr;
-for($i = 0; $i < count($allHeroTable);$i++){
-	if($allHeroTable[$i]['teams_id'] == $teamId){
-		$a_tempIdArr[$i+1] = $allHeroTable[$i]['id'];
-	}
-}
-if(array_search($selectedHeroNumber, $a_tempIdArr) == ''){
-	$selectedHeroNumber = $heroTable[0]['id'];
-}
+
 
 //calculates the total members in a team and pushes the ratings in a new array
 for($j = 0; $j < count($teamTable);$j++){
@@ -93,7 +84,7 @@ for($j = 0; $j < count($teamTable);$j++){
 	$a_ratingCount = 0;
 
 	for($k = 0; $k < count($allHeroTable); $k++){
-		if($allHeroTable[$k]['teams_id']-1 == $j){
+		if($allHeroTable[$k]['teams_id'] == $teamTable[$j]['id']){
 			$a_heroCounter++;
 			$a_heroRatingCounter = 0;
 			$a_heroScoreCounter = 0;
@@ -121,6 +112,24 @@ for($j = 0; $j < count($teamTable);$j++){
 	$teamTable[$j]['members'] = $a_heroCounter;
 }
 
+// dump($allHeroTable);
+usort($allHeroTable, function ($a, $b) { return strcmp($a["averageScore"], $b["averageScore"])*-1; });
+
+//when you switch to another team selects the first person of that team
+$a_tempIdArr;
+$a_tempIdArrSorted;
+for($i = 0; $i < count($allHeroTable);$i++){
+	if($allHeroTable[$i]['teams_id'] == $teamId){
+		$a_tempIdArr[$i+1] = $allHeroTable[$i]['id'];
+		$a_tempIdArrSorted[] = $allHeroTable[$i]['id'];
+	}
+}
+
+if(array_search($selectedHeroNumber, $a_tempIdArr) == ''){
+	// $selectedHeroNumber = $heroTable[0]['id'];
+	$selectedHeroNumber = $a_tempIdArrSorted[0];
+}
+
 //calculates the average and total score for each team
 for($j = 0; $j < count($teamTable);$j++){
 	if(isset($score[$j]['empty']) == true){
@@ -132,8 +141,8 @@ for($j = 0; $j < count($teamTable);$j++){
 		$teamTable[$j]['totalScore'] = $a_scoreCounter;
 		$teamTable[$j]['averageScore'] = round($teamTable[$j]['totalScore'] / $teamTable[$j]['totalRatings'],1);
 	}else{
-		$teamTable[$j]['totalScore'] = "none";
-		$teamTable[$j]['averageScore'] = "none";
+		$teamTable[$j]['totalScore'] = 0;
+		$teamTable[$j]['averageScore'] = 0;
 	}
 }
 
@@ -144,6 +153,9 @@ for($i = 0; $i < count($allHeroTable);$i++){
 		}
 	}
 }
+// dump($teamTable);
+usort($teamTable, function ($a, $b) { return strcmp($a["averageScore"], $b["averageScore"])*-1; });
+// dump($teamTable);
 
 
 //checks if your user name and password are in the database
@@ -207,10 +219,18 @@ if(isset($_POST['commentSubmit'])){
 		$msg = "text";
 		echo "<script>(function(){alert('$msg');})();</script>";
 	}
+	unset($_POST['commentSubmit']);
 }
 
 if(isset($_POST['CMS'])){
 header('Location:http://localhost/DCHeroes/CMS.php');
+}
+
+$selectedArrayId = 0;
+for($i = 0; $i < count($teamTable); $i++){
+	if($teamTable[$i]['id'] == $teamId){
+		$selectedArrayId = $i;
+	}
 }
 // dump($teamTable);
 
@@ -245,7 +265,7 @@ header('Location:http://localhost/DCHeroes/CMS.php');
 				</a>
 				<?php if($_SESSION['privilege'] == 1){?>
 					<a class="submitContainer submitContainerLogout" href="<?php echo '?teamId=' . $teamId . '&heroId=' . $selectedHeroNumber ?>">
-						<!-- <input name='CMS' class='inputLogin' type='submit' value="CMS"> -->
+						<input name='CMS' class='inputLogin' type='submit' value="CMS">
 					</a>
 				<?php } ?>
 			</form>
@@ -257,17 +277,18 @@ header('Location:http://localhost/DCHeroes/CMS.php');
 			<ul class="list">
 				<?php
 				for($i = 0; $i < count($teamTable); $i++){
+					if($teamTable[$i]['name'] != "unassigned Heroes"){
 				?>
 				<li>
 					<?php
 					if($teamId != $teamTable[$i]['id']){
 						if ( $i & 1 ) {
 					?>
-					<a class="teamContainer even" href="<?php echo '?teamId=' . ($i+1) . '&heroId=' . $selectedHeroNumber ?>">
+					<a class="teamContainer even" href="<?php echo '?teamId=' . ($teamTable[$i]['id']) . '&heroId=' . $selectedHeroNumber ?>">
 					<?php }else { ?>
-					<a class="teamContainer" href="<?php echo '?teamId=' . ($i+1) . '&heroId=' . $selectedHeroNumber ?>">
+					<a class="teamContainer" href="<?php echo '?teamId=' . ($teamTable[$i]['id']) . '&heroId=' . $selectedHeroNumber ?>">
 					<?php }}else{ ?>
-					<a class="teamContainer selected" href="<?php echo '?teamId=' . ($i+1) . '&heroId=' . $selectedHeroNumber ?>">
+					<a class="teamContainer selected" href="<?php echo '?teamId=' . ($teamTable[$i]['id']) . '&heroId=' . $selectedHeroNumber ?>">
 					<?php }?>
 						<!-- <div class="teamContainer"> -->
 						<?php if($teamTable[$i]['image'] !== null){?>
@@ -283,7 +304,7 @@ header('Location:http://localhost/DCHeroes/CMS.php');
 						<!-- </div> -->
 					</a>
 				</li>
-			<?php }?>
+			<?php }}?>
 			<ul>
 		</div>
 		<div class="subContainer right">
@@ -327,10 +348,15 @@ header('Location:http://localhost/DCHeroes/CMS.php');
 		<?php }else {?>
 			<img class="heroImage" src="img/puppy.jpg">
 		<?php } ?>
+		<div class="heroText heroName">Average Rating: <?php echo $selectedHero['averageScore']  ;?></div>
+		<?php if($teamTable[$selectedArrayId]['averageScore'] > $selectedHero['averageScore']){?>
+		<div class="heroText heroName">Below Average</div>
+		<?php }else if($teamTable[$selectedArrayId]['averageScore'] < $selectedHero['averageScore']){ ?>
+		<div class="heroText heroName">Above Average</div>
+		<?php }?>
 		<div class="heroText heroName">Name: <?php echo $selectedHero['name']; ?></div><br>
 		<div class="heroText heroName">Description: <?php echo $selectedHero['description']; ?></div><bR>
 		<div class="heroText heroName">Powers: <?php echo $selectedHero['power']; ?></div><br>
-		<div class="heroText heroName">Average Rating: <?php echo $selectedHero['averageScore']  ?></div>
 		<form method="POST">
 			<fieldset class="rate">
 			    <input type="radio" id="rating10" name="rating" value="10" /><label for="rating10" title="5 stars"></label>
@@ -367,9 +393,6 @@ header('Location:http://localhost/DCHeroes/CMS.php');
 	</div>
 
 	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-		<!-- jQuery -->
-		<script src="js/jquery-3.3.1.min.js"></script>
-    <!-- Custom js  -->
-    <script src="js/main.js"></script>
+
 </body>
 </html>

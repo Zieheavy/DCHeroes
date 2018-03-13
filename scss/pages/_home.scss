@@ -28,6 +28,16 @@
       background: paleturquoise;
       width: 40%;
       position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .teamImage{
+        border-radius: 100%;
+        height: 30vmin;
+      }
+      .inputLogin{
+        width: 100%;
+      }
       .ratingContainer{
         background: pink;
         .rating{
@@ -84,15 +94,16 @@
     height: 50vmin;
   }
   .submitComment{
-    width: 95%;
-    margin-left: 2.5%;
+    width: 200%;
+    margin-left: -50%;
+    text-align: center;
     height: 10vmin;
     background-color: white;
     border: 0.1vmin solid gray;
   }
 
   .submitContainer{
-      width: 95%;
+      width: 100%;
       display: inline-block;
       border: 0;
   }
@@ -106,7 +117,9 @@
     padding: 0;
     list-style: none;
   }
-
+  .commentContainer{
+    width: 100%;
+  }
 
 
   /* Base setup */
@@ -114,7 +127,7 @@
 
   /* Ratings widget */
   .rate {
-      width: 60%;
+      width: 75%;
       border: 0;
   }
   /* Hide radio */

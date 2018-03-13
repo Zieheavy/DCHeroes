@@ -2,4 +2,40 @@
   .inputLogin{
     height: 3vmin;
   }
+  .testContainer{
+    width: 10vmin;
+    height: 10vmin;
+  }
+  .teams{
+    height: 30vmin;
+    width: 120vmin;
+  }
+  .teamRepeat{
+    width: 15vmin;
+    height: 50%;
+    background-color: blue;
+    display: inline-block;
+    position: relative;
+  }
+  .teamImage{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  .teamName{
+    position: absolute;
+    z-index: 1;
+    color: white;
+    text-align: center;
+    font-size: 3vmin;
+    padding-top: 3vmin;
+    width: 100%;
+    @include stroke(2,black);
+  }
+  .hidden{
+    display: none;
+  }
 }

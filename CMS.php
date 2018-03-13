@@ -1,76 +1,79 @@
 <?php
-session_start();
-include 'include/defaults.php';
+  include 'include/defaults.php';
 
-if(!isset($_SESSION['CMSSelector'])){
-  $_SESSION['CMSSelector'] = 1;
-}
-
-if(isset($_POST['teams'])){
-  $_SESSION['CMSSelector'] = 1;
-}else if(isset($_POST['users'])){
-  $_SESSION['CMSSelector'] = 2;
-}else if(isset($_POST['heroes'])){
-  $_SESSION['CMSSelector'] = 3;
-}
-
-$teamsTable;
-$usersTable;
-$heroesTable;
-
-$teamsQuery = mysqli_query($connect,"SELECT * FROM `teams`");
-$usersQuery = mysqli_query($connect,"SELECT * FROM `users`");
-$heroesQuery = mysqli_query($connect,"SELECT * FROM `heroes`");
-
-while($row = mysqli_fetch_assoc($teamsQuery)){
-	$teamsTable[] = $row;
-}
-while($row = mysqli_fetch_assoc($usersQuery)){
-	$usersTable[] = $row;
-}
-while($row = mysqli_fetch_assoc($heroesQuery)){
-	$heroesTable[] = $row;
-}
-
-switch ($_SESSION['CMSSelector']) {
-    case 1:
-        echo "i equals 0";
-        break;
-    case 2:
-        echo "i equals 1";
-        break;
-    case 3:
-        echo "i equals 2";
-        break;
-}
+  // dump($_POST);
+  if(isset($_POST['return'])){
+    header('Location:http://localhost/DCHeroes/?teamId=1&heroId=');
+  }
 ?>
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="css/main.min.css">
 </head>
-<body class="CMSPage">
-  <form class="selecter" method="POST">
-    <input type="submit" name="teams" value="teams" class='inputLogin'>
-    <input type="submit" name="users" value="users" class='inputLogin'>
+<body class="js-cms-page CMSPage">
+<div class="teams">
+  <div class="teamRepeat">
+    <div class="teamName" id="teamName_1"></div>
+    <img class="teamImage" src="#" id="teamImage_1">
+  </div>
+</div>
+  <form method="post" action="#" class="inlineForm" enctype="multipart/form-data">
+    <input type="hidden" class="inputTeamId" name="inputTeamId" value="" />
+    <input class="inputTeamName" name="inputTeamName" placeholder="team name"></input>
+    <input class="inputTeamImage" name="inputTeamImage" placeholder="team image"></input>
+    <input type="button" name="updateTeam" class="updateTeam" value="update" />
+    <input type="button" name="deleteTeam" class="deleteTeam" value="delete" />
   </form>
-  <?php
-  if($_SESSION['CMSSelector'] == 1){
-    dump($teamsTable);
-    echo "1";
-    for($i = 0; $i < count($teamsTable);$i++){
-  ?>
-    <input type="text" name="" value="">
-  <?php
-  }}else if($_SESSION['CMSSelector'] == 2){
-    dump($usersTable);
-    echo "2";
-    for($i = 0; $i < count($usersTable);$i++){
-    ?>
 
-  <?php }}else if($_SESSION['CMSSelector'] == 3){ ?>
+  <form method="post" action="#" class="inlineForm" enctype="multipart/form-data">
+    <input class="newTeamName" name="newTeamName" placeholder="new team name"></input>
+    <input class="newTeamImage" name="newTeamImage" placeholder="new team image"></input>
+    <input type="button" name="newTeam" class="newTeam" value="new Team" />
+  </form>
 
-  <?php } ?>
-  <input type="submit" name="submit" value="update">
+  <form method="post" action="#" class="inlineForm" enctype="multipart/form-data">
+       <div class="repeatingSection">
+           <a href="#" class="buttonGray buttonRight deleteHero" id='id_1'>Delete</a>
+           <!-- <input type="hidden" name="fighter_a_id_1" id="fighter_a_id_1" value="" />
+           <input type="hidden" name="fighter_b_id_1" id="fighter_b_id_1" value="" />-->
+           <input type="hidden" name="id_1" id="id_1" value="" />
+           <div class="formRow">
+               <label for="name_1">name</label>
+               <input type="text" name="name_1" id="name_1" value="" />
+           </div>
+           <div class="formRow">
+               <label for="power_1">power</label>
+               <textarea rows="4" cols="50" name="power_1" id="power_1"></textarea>
+               <!-- <input type="text" name="power_1" id="power_1" value="" /> -->
+           </div>
+           <div class="formRow">
+               <label for="description_1">description</label>
+               <textarea rows="4" cols="50" name="description_1" id="description_1"></textarea>
+           </div>
+           <div class="formRow">
+               <label for="image_1">image</label>
+               <input type="text" name="image_1" id="image_1" value="" />
+           </div>
+           <div class="formRow">
+               <label for="teams_id_1">team</label>
+               <input type="text" name="teams_id_1" id="teams_id_1" value="" />
+           </div>
+           <input type="button" name="update_1" id="update_1" class="js-update" value="update" />
+           <br><br>
+       </div>
+       <div class="formRowRepeatingSection">
+               <a href="#" class="buttonGray buttonRight addHero">Add Hero</a>
+           </div>
+       <div class="formRow">
+           <input type="submit" class="submitButton" name="return" value="return" />
+       </div>
+   </form>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<div style="opacity: 0;">
+ </div>
+
+    <!-- jQuery -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- Custom js  -->
+    <script src="js/main.js"></script>
 </body>
