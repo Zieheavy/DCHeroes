@@ -1,18 +1,24 @@
 .CMSPage{
   .inputLogin{
+    color: black;
+    text-decoration: none;
+    text-align: center;
     height: 3vmin;
+    font-size: 2vmin;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
   }
   .testContainer{
     width: 10vmin;
     height: 10vmin;
   }
   .teams{
-    height: 30vmin;
-    width: 120vmin;
+    width: 100%;
   }
   .teamRepeat{
     width: 15vmin;
-    height: 50%;
+    height: 15vmin;
     background-color: blue;
     display: inline-block;
     position: relative;
@@ -37,5 +43,26 @@
   }
   .hidden{
     display: none;
+  }
+  .repeatingSection{
+    background: lightsteelblue;
+    width: 60vmin;
+    display: inline-block;
+    margin: 0.5vmin;
+  }
+  .textArea{
+    resize: none;
+    width: 50vmin;
+    height: 10vmin;
+    border: 0px;
+  }
+  .inputBox{
+    float: right;
+  }
+  .formRow{
+    margin-bottom: 1vmin;
+  }
+  .textAreaRow{
+    height: 10vmin;
   }
 }

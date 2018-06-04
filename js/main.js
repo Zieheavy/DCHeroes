@@ -49,7 +49,8 @@ $(document).ready(function(){
     $('#power_'+(lastNum+1)).val('');
     $('#description_'+(lastNum+1)).val('');
     $('#image_'+(lastNum+1)).val('');
-    $('#teams_id_'+(lastNum+1)).val(teamsArray[selectedTeam-1].id)
+    $('#teamid_'+(lastNum+1)).val(teamsArray[selectedTeam-1].id);
+    // $('#teams_id_'+(lastNum+1)).val(teamsArray[selectedTeam-1].id);
     $('#update_'+(lastNum+1)).val('add');
     $('#update_'+(lastNum+1)).removeClass('js-update');
     $('#update_'+(lastNum+1)).addClass('js-add');
@@ -98,12 +99,12 @@ $(document).ready(function(){
       power: $('#power_'+a_selected).val().replace("\'", ""),
       description: $('#description_'+a_selected).val().replace("\'", ""),
       image: $('#image_'+a_selected).val().replace("\'", ""),
-      team: $('#teams_id_'+a_selected).val().replace("\'", "")
+      team: $('#teamid_'+a_selected).val().replace("\'", "")
+      // team: $('#teams_id_'+a_selected).val().replace("\'", "")
     }, function(response,status){
-        if(response == "\"succes\""){
+        if(response == "succes"){
           console.log('succesfuly updated item '+$('#id_'+a_selected).val());
-        }else{
-          console.log(response)
+          location.reload();
         }
       }
     );
@@ -118,9 +119,8 @@ $(document).ready(function(){
       power: $('#power_'+a_formId).val().replace("\'", ""),
       description: $('#description_'+a_formId).val().replace("\'", ""),
       image: $('#image_'+a_formId).val().replace("\'", ""),
-      team: $('#teams_id_'+a_formId).val().replace("\'", "")
+      team: $('#teamid_'+a_formId).val().replace("\'", "")
     }, function(response,status){
-      console.log(response)
         if(response == "succes"){
           console.log("hero succesfuly added");
           location.reload();
@@ -141,6 +141,10 @@ $(document).ready(function(){
         }
       }
     );
+  })
+
+  $('.test').on('click',function(){
+    console.log($('#teamid_1').val());
   })
 
   $('.newTeam').on('click',function(){
@@ -172,7 +176,7 @@ $(document).ready(function(){
     // Add a new repeating section
   var attrs = ['for', 'id', 'name'];
   function resetAttributeNames(section) {
-      var tags = section.find('input, label, textarea, a, div, img'), idx = section.index();
+      var tags = section.find('input, label, textarea, a, div, img, select'), idx = section.index();
       tags.each(function() {
         var $this = $(this);
         $.each(attrs, function(i, attr) {
@@ -192,6 +196,7 @@ $(document).ready(function(){
   }
 
   function getHeroes (id,arrayNum){
+    console.log('getHeroes')
     setTimeout(function(){
       $('.inputTeamName').val(teamsArray[arrayNum].name);
       $('.inputTeamImage').val(teamsArray[arrayNum].image);
@@ -205,6 +210,13 @@ $(document).ready(function(){
         if(heroesArray.length >= 1){
           $('.repeatingSection').removeClass("hidden");
 
+          for(var i = 0; i < heroesArray.length; i++){
+          $('#teamid_'+(i+1)).text('')
+            for(var j = 0; j < teamsArray.length; j++){
+              $('#teamid_'+(i+1)).append('<option value="' + teamsArray[j].id + '">' + teamsArray[j].name + '</option>');
+            }
+          }
+
           for(var i = 0; i < heroesArray.length-1; i++){
             addHero();
           }
@@ -214,7 +226,8 @@ $(document).ready(function(){
             $('#power_'+i).val(heroesArray[i-1].power);
             $('#description_'+i).val(heroesArray[i-1].description);
             $('#image_'+i).val(heroesArray[i-1].image);
-            $('#teams_id_'+i).val(heroesArray[i-1].teams_id);
+            $('#teamid_'+i).val(heroesArray[i-1].teams_id);
+            // $('#teams_id_'+i).val(heroesArray[i-1].teams_id);
           }
         }else{
           console.log("empty")

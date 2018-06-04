@@ -217,7 +217,7 @@ if(isset($_POST['commentSubmit'])){
 		}
 	}else{
 		$msg = "text";
-		echo "<script>(function(){alert('$msg');})();</script>";
+		// echo "<script>(function(){alert('$msg');})();</script>";
 	}
 	unset($_POST['commentSubmit']);
 }
@@ -296,11 +296,13 @@ for($i = 0; $i < count($teamTable); $i++){
 						<?php }else {?>
 							<img class="teamImage" src="img/puppy.jpg">
 						<?php } ?>
-							<div class="teamText teamName"><?php echo $teamTable[$i]['name']; ?></div>
-							<div class="teamText">Members: <?php echo $teamTable[$i]['members']; ?></div>
-							<div class="teamText">Ratings: <?php echo $teamTable[$i]['totalRatings']; ?></div>
-							<div class="teamText">Total Stars: <?php echo $teamTable[$i]['totalScore']; ?></div>
-							<div class="teamText">Average Stars: <?php echo $teamTable[$i]['averageScore']; ?></div>
+							<div class="informationContainer">
+								<div class="teamText teamName"><?php echo $teamTable[$i]['name']; ?></div>
+								<div class="teamText">Members: <?php echo $teamTable[$i]['members']; ?></div>
+								<div class="teamText">Ratings: <?php echo $teamTable[$i]['totalRatings']; ?></div>
+								<div class="teamText">Total Stars: <?php echo $teamTable[$i]['totalScore']; ?></div>
+								<div class="teamText">Average Stars: <?php echo $teamTable[$i]['averageScore']; ?></div>
+							</div>
 						<!-- </div> -->
 					</a>
 				</li>
@@ -330,10 +332,12 @@ for($i = 0; $i < count($teamTable); $i++){
 							<?php }else {?>
 								<img class="heroImage" src="img/puppy.jpg">
 							<?php } ?>
-							<div class="heroText heroName">Name: <?php echo $allHeroTable[$i]['name']; ?></div>
-							<div class="heroText">Ratings: <?php echo $allHeroTable[$i]['totalRatings']; ?></div>
-							<div class="heroText">Total stars: <?php echo $allHeroTable[$i]['totalScore']; ?></div>
-							<div class="heroText">Average stars: <?php echo $allHeroTable[$i]['averageScore']; ?></div>
+								<div class="informationContainer">
+									<div class="heroText heroName">Name: <?php echo $allHeroTable[$i]['name']; ?></div>
+									<div class="heroText">Ratings: <?php echo $allHeroTable[$i]['totalRatings']; ?></div>
+									<div class="heroText">Total stars: <?php echo $allHeroTable[$i]['totalScore']; ?></div>
+									<div class="heroText">Average stars: <?php echo $allHeroTable[$i]['averageScore']; ?></div>
+								</div>
 							<!-- </div> -->
 						</a>
 					<li>
@@ -357,7 +361,7 @@ for($i = 0; $i < count($teamTable); $i++){
 		<div class="heroText heroName">Name: <?php echo $selectedHero['name']; ?></div><br>
 		<div class="heroText heroName">Description: <?php echo $selectedHero['description']; ?></div><bR>
 		<div class="heroText heroName">Powers: <?php echo $selectedHero['power']; ?></div><br>
-		<form method="POST">
+		<form method="POST" class="ratingContainer">
 			<fieldset class="rate">
 			    <input type="radio" id="rating10" name="rating" value="10" /><label for="rating10" title="5 stars"></label>
 			    <input type="radio" id="rating9" name="rating" value="9" /><label class="half" for="rating9" title="4 1/2 stars"></label>

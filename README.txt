@@ -1,0 +1,1 @@
+Login as username: admin, password: admin to unlock the button for the cms page.

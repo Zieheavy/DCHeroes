@@ -38,12 +38,6 @@
       .inputLogin{
         width: 100%;
       }
-      .ratingContainer{
-        background: pink;
-        .rating{
-          display: inline-block;
-        }
-      }
     }
   }
   .subContainer{
@@ -73,18 +67,17 @@
       background-color: #AFADEE;
     }
     .teamImage,.heroImage{
-      width: 30%;
-      height: 20vmin;
+      width: 35%;
+      height: 100%;
       float: left;
     }
     .teamText,.heroText{
-      font-size: 2vmin;
-      float: right;
-      text-align: left;
-      width: 67%;
+      font-size: 2.5vmin;
+      width: 100%;
+      text-align: center;
     }
     .teamName,.heroName{
-      font-size: 3vmin;
+      font-size: 3.5vmin;
       text-align: center;
       margin: 0 1vmin 0 0;
       font-weight: 1000;
@@ -94,8 +87,7 @@
     height: 50vmin;
   }
   .submitComment{
-    width: 200%;
-    margin-left: -50%;
+    width: 100%;
     text-align: center;
     height: 10vmin;
     background-color: white;
@@ -108,10 +100,6 @@
       border: 0;
   }
 
-  .heroText{
-    text-align: center;
-  }
-
   .list{
     margin: 0;
     padding: 0;
@@ -120,6 +108,24 @@
   .commentContainer{
     width: 100%;
   }
+  .ratingContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .informationContainer{
+    width: 65%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    float: right;
+    display: inline-flex;
+  }
+
+
+
 
 
   /* Base setup */
@@ -127,8 +133,9 @@
 
   /* Ratings widget */
   .rate {
-      width: 75%;
-      border: 0;
+    width: 20vmin;
+    border: 0;
+    display: inline-block;
   }
   /* Hide radio */
   .rate > input {
